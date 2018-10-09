@@ -11,6 +11,7 @@
  */
 
 #include "main.h"
+#include "PidCore.h"
 
 /*
  * Runs the user operator control code. This function will be started in its own task with the
@@ -30,7 +31,65 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl() {
+	//Disables the driving pid code because we don't use it here.
+	leftDriveB.enable = false;
+	leftDriveF.enable = false;
+	rightDriveB.enable = false;
+	rightDriveF.enable = false;
+
 	while (1) {
+
+		//Perimitive driving:
+		short leftDrive = joystickGetAnalog(1, 3);
+		leftDrive = LOWPASS(leftDrive, 16);
+		leftDrive *= -1;
+		short rightDrive = joystickGetAnalog(1, 2);
+		rightDrive = LOWPASS(rightDrive, 16);
+
+		motorSet(leftDriveF.mport, leftDrive);
+		motorSet(leftDriveB.mport, leftDrive);
+		motorSet(rightDriveF.mport, rightDrive);
+		motorSet(rightDriveF.mport, rightDrive);
+		//End fundemental driving.
+
+		//Tower
+		if(joystickGetDigital(1, 6, JOY_UP)){
+			tower.mtarget += 10;
+		}else if(joystickGetDigital(1, 6, JOY_DOWN)){
+			tower.mtarget -= 10;
+		}
+		//Tower Macro
+		if(joystickGetDigital(1, 7, JOY_UP)){
+			tower.mtarget = TOWER_UP;
+		}else if(joystickGetDigital(1, 7, JOY_DOWN)){
+			tower.mtarget = TOWER_DOWN;
+		}
+
+		//Forks
+		if(joystickGetDigital(1, 8, JOY_UP)){
+			forks.mtarget = FORKS_UP;
+		}else if(joystickGetDigital(1, 8, JOY_LEFT)){
+			forks.mtarget = FORKS_FLAT;
+		}else if(joystickGetDigital(1, 8, JOY_DOWN)){
+			forks.mtarget = FORKS_DROP;
+		}
+
+		//Loader
+		if(joystickGetDigital(1, 5, JOY_UP)){
+			loader.mtarget += 10;
+		}else if(joystickGetDigital(1, 5, JOY_DOWN)){
+			loader.mtarget -= 10;
+		}
+		//Loader Macro
+		if(joystickGetDigital(1, 7, JOY_LEFT)){
+			loader.mtarget = LOADER_UP;
+		}else if(joystickGetDigital(1, 7, JOY_RIGHT)){
+			loader.mtarget = LOADER_DOWN;
+		}
+
+		//Catipult
+		//TODO This is going to be a trick.
+
 		delay(20);
 	}
 }
