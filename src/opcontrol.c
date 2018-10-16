@@ -31,20 +31,29 @@
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
 void operatorControl() {
+	printf("driver? \n");
 	//Disables the driving pid code because we don't use it here.
 	leftDriveB.enable = false;
 	leftDriveF.enable = false;
 	rightDriveB.enable = false;
 	rightDriveF.enable = false;
+	
+	/*forks.enable = true;
+	tower.enable = false;
+	loader.enable = false;
+	catipult.enable = false;*/
 
 	while (1) {
-
+	int sensor = 0;
+	imeGet(7, &sensor);
+	printf("Forks = %d, Target = %ld \n", sensor, forks.mtarget);
+	
 		//Perimitive driving:
 		short leftDrive = joystickGetAnalog(1, 3);
-		leftDrive = LOWPASS(leftDrive, 16);
+		leftDrive = LOWPASS(leftDrive, 8);
 		leftDrive *= -1;
 		short rightDrive = joystickGetAnalog(1, 2);
-		rightDrive = LOWPASS(rightDrive, 16);
+		rightDrive = LOWPASS(rightDrive, 8);
 
 		motorSet(leftDriveF.mport, leftDrive);
 		motorSet(leftDriveB.mport, leftDrive);
@@ -90,6 +99,6 @@ void operatorControl() {
 		//Catipult
 		//TODO This is going to be a trick.
 
-		delay(20);
+		delay(30);
 	}
 }

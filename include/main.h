@@ -40,19 +40,19 @@ struct pid leftDriveB;
 struct pid rightDriveF;
 struct pid rightDriveB;
 
-#define CATUPULT_LOAD 255
-#define CATIPULT_LAUNCH 260
+#define CATUPULT_LOAD 0
+#define CATIPULT_LAUNCH 1803
 struct pid catipult;
 #define LOADER_DOWN 90
 #define LOADER_UP 0
 struct pid loader;
 
 #define TOWER_DOWN 0
-#define TOWER_UP 600
+#define TOWER_UP -2601
 struct pid tower;
 #define FORKS_UP 0
-#define FORKS_FLAT 200
-#define FORKS_DROP 800
+#define FORKS_FLAT 1164
+#define FORKS_DROP 2007
 struct pid forks;
 
 // A function prototype looks exactly like its declaration, but with a semicolon instead of

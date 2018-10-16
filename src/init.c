@@ -41,32 +41,33 @@ void initializeIO() {
  * can be implemented in this task if desired.
  */
 void initialize() {
+	printf("hello world");
   imeCount = imeInitializeAll();
   /**Ports are wrong*/
-  leftDriveF.mport = 1;
-  leftDriveF.sensor = ime(0);
+  leftDriveF.mport = 2;
+  leftDriveF.sensor = ime(1);
   pid_arr[pid_count++] = &leftDriveF;
-  leftDriveB.mport = 2;
-  leftDriveB.sensor = ime(1);
+  leftDriveB.mport = 1;
+  leftDriveB.sensor = ime(0);
   pid_arr[pid_count++] = &leftDriveB;
-  rightDriveF.mport = 3;
-  rightDriveF.sensor = ime(2);
+  rightDriveF.mport = 10;
+  rightDriveF.sensor = ime(4);
   pid_arr[pid_count++] = &rightDriveF;
-  rightDriveB.mport = 4;
-  rightDriveB.sensor = ime(3);
+  rightDriveB.mport = 7;
+  rightDriveB.sensor = ime(5);
   pid_arr[pid_count++] = &rightDriveB;
 
-  catipult.mport = 5;
-  catipult.sensor = ime(4);
+  catipult.mport = 4;
+  catipult.sensor = ime(3);
   pid_arr[pid_count++] = &catipult;
-  loader.mport = 6;
-  catipult.sensor = ime(5);
+  loader.mport = 3;
+  loader.sensor = ime(2);
   pid_arr[pid_count++] = &forks;
 
-  tower.mport = 7;
+  tower.mport = 8;
   tower.sensor = ime(6);
   pid_arr[pid_count++] = &tower;
-  forks.mport = 8;
+  forks.mport = 9;
   forks.sensor = ime(7);
   pid_arr[pid_count++] = &forks;
 
@@ -100,4 +101,5 @@ void initialize() {
   initGameState(colour, side);
 
   setupMovements(&leftDriveF, &leftDriveB, &rightDriveF, &rightDriveB, IME_TORQUE, 2.5f, 2.5f);
+  printf("end of init");
 }
