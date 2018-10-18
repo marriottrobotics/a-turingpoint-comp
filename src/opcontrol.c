@@ -42,7 +42,7 @@ void operatorControl() {
 	tower.enable = false;
 	loader.enable = false;
 	catipult.enable = false;*/
-
+	
 	while (1) {
 	int sensor = 0;
 	imeGet(7, &sensor);
